@@ -18,6 +18,8 @@ export default function LocationHandler() {
   const isError = isLocationError || isOutfitsError || isWeatherError;
   const isLoading = isLoadingLocation || isLoadingOutfits || isLoadingWeather;
 
+  const isReadyToShowCards = !isLoading && !isError && !!weather && !!outfits;
+
   return (
     <>
       <section className="max-w-lg mb-8">
@@ -60,7 +62,7 @@ export default function LocationHandler() {
             </div>
             
             <div className="flex flex-col gap-2 w-full max-w-2xl mx-auto">
-              {weather && outfits && !isLoading && !isError && (
+              {isReadyToShowCards && (
                 weather.map((day, index) => (
                   <DayCard
                     key={day.temperatureMax + day.temperatureMin + day.weatherCode}
