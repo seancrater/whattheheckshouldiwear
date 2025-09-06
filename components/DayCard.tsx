@@ -13,7 +13,7 @@ interface DayCardProps {
 export default function DayCard({ date, description, temperatureMax, temperatureMin, outfitSuggestion }: DayCardProps) {
   const dayOfWeek = format(parseISO(date), "EEEE");
 
-  if (!description) {
+  if (!description || !outfitSuggestion) {
     return null;
   }
 

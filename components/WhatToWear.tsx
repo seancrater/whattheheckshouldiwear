@@ -18,7 +18,7 @@ export default function LocationHandler() {
   const isError = isLocationError || isOutfitsError || isWeatherError;
   const isLoading = isLoadingLocation || isLoadingOutfits || isLoadingWeather;
 
-  const isReadyToShowCards = !isLoading && !isError && !!weather && !!outfits;
+  const isReadyToShowCards = !isLoading && !isError && weather && weather?.length === 7 && outfits && outfits?.length === 7;
 
   return (
     <>
