@@ -13,6 +13,10 @@ interface DayCardProps {
 export default function DayCard({ date, description, temperatureMax, temperatureMin, outfitSuggestion }: DayCardProps) {
   const dayOfWeek = format(parseISO(date), "EEEE");
 
+  if (!description) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col gap-2 sm:flex-row items-start justify-between bg-gradient-to-r from-blue-100 to-blue-300 p-3 mb-2 rounded-lg shadow border border-blue-400 relative">
       <div className="h-full w-6 absolute bottom-0 left-0 flex items-center justify-center rounded-bl-lg rounded-tl-lg bg-blue-400">
