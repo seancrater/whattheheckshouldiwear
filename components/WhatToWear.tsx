@@ -15,8 +15,6 @@ export default function LocationHandler() {
 
   const { outfits, isLoading: isLoadingOutfits, isError: isOutfitsError, error: outfitsError } = useOutfits(weather);
 
-  console.log(outfits)
-
   const isError = isLocationError || isOutfitsError || isWeatherError;
   const isLoading = isLoadingLocation || isLoadingOutfits || isLoadingWeather;
 
