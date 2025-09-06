@@ -21,7 +21,7 @@ export function useOutfits(weather: WeatherData[] | undefined) {
   });
 
   return {
-    outfits: query.data?.outfits,
+    outfits: query.data?.outfits || [],
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.data?.error,

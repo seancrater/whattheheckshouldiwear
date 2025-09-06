@@ -69,7 +69,7 @@ export default function LocationHandler() {
                     temperatureMax={day.temperatureMax}
                     temperatureMin={day.temperatureMin}
                     weatherCode={day.weatherCode}
-                    outfitSuggestion={outfits && outfits[index]}
+                    outfitSuggestion={outfits.length > 0 ? outfits[index] : undefined}
                   />
                 ))
               )}
