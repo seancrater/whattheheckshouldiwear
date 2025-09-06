@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     const location = data.choices?.[0]?.message?.content?.trim();
 
     return NextResponse.json({ location: location ? JSON.parse(location) : undefined });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

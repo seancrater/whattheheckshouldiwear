@@ -10,7 +10,7 @@ interface DayCardProps {
   outfitSuggestion: string | undefined;
 }
 
-export default function DayCard({ date, description, temperatureMax, temperatureMin, weatherCode, outfitSuggestion }: DayCardProps) {
+export default function DayCard({ date, description, temperatureMax, temperatureMin, outfitSuggestion }: DayCardProps) {
   const dayOfWeek = format(parseISO(date), "EEEE");
 
   return (

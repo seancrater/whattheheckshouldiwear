@@ -58,7 +58,7 @@ export async function POST(request: Request) {
     const outfits = JSON.parse(data.choices?.[0]?.message?.content ?? '[]');
 
     return NextResponse.json(outfits);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
