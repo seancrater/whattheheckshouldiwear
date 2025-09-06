@@ -44,7 +44,9 @@ const weatherCodeDescriptions: { [key: number]: string } = {
   99: "Thunderstorm with heavy hail",
 }
 
-const fetchWeather = async (latitude: number, longitude: number): Promise<WeatherData[]> => {
+const fetchWeather = async (latitude?: number, longitude?: number, signal?: AbortSignal): Promise<WeatherData[]> => {
+  if (!latitude || !longitude) return []
+  
   const queryParameters = new URLSearchParams({
     latitude: latitude.toString(),
     longitude: longitude.toString(),
@@ -55,7 +57,7 @@ const fetchWeather = async (latitude: number, longitude: number): Promise<Weathe
   });
 
   const url = `https://api.open-meteo.com/v1/forecast?${queryParameters.toString()}`;
-  const response = await fetch(url);
+  const response = await fetch(url, { signal });
   if (!response.ok) throw new Error('Failed to fetch weather');
 
   const data = await response.json() as WeatherDataResponse;
@@ -76,9 +78,8 @@ const fetchWeather = async (latitude: number, longitude: number): Promise<Weathe
 export const useWeather = (latitude?: number, longitude?: number) => {
   const query = useQuery({
     queryKey: ['weather', latitude, longitude],
-    queryFn: () => {
-      if (latitude == null || longitude == null || (latitude === 0 && longitude === 0)) throw new Error('Missing coordinates');
-      return fetchWeather(latitude, longitude);
+    queryFn: ({ signal }) => {
+      return fetchWeather(latitude, longitude, signal);
     },
     enabled: latitude != null && longitude != null,
     refetchOnWindowFocus: false,

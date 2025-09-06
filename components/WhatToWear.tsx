@@ -6,7 +6,7 @@ import { useLocation } from "@/hooks/useLocation";
 import { useOutfits } from "@/hooks/useOutfits";
 import { useWeather } from "@/hooks/useWeather";
 
-export default function LocationHandler() {
+export default function WhatToWear() {
   const { location, error: locationError, isLoading: isLoadingLocation, isError: isLocationError, locationDescription, updateLocationDescription } = useLocation();
 
   const latitude = location?.latitude;
@@ -38,14 +38,14 @@ export default function LocationHandler() {
       </section>
       
       <section className="flex justify-center flex-col w-full">
-        {(isLoading) && (
+        {isLoading && (
           <div className="flex items-center justify-center gap-2 text-blue-500 animate-pulse my-2">
             <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /></svg>
             <span>Loading...</span>
           </div>
         )}
 
-        {isError && (
+        {!isLoading && isError && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-2">
             {locationError || outfitsError ? (
               <span>{locationError || outfitsError}</span>
@@ -55,26 +55,24 @@ export default function LocationHandler() {
           </div>
         )}
 
-        {locationDescription && latitude && longitude && !isError && !isLoading && (
+        {isReadyToShowCards && (
           <>
             <div className="w-full text-center text-md font-semibold mb-4">
               Here is a forecast and outfit suggestions for {location?.title ? location.title : locationDescription}
             </div>
             
             <div className="flex flex-col gap-2 w-full max-w-2xl mx-auto">
-              {isReadyToShowCards && (
-                weather.map((day, index) => (
-                  <DayCard
-                    key={day.temperatureMax + day.temperatureMin + day.weatherCode}
-                    date={day.date}
-                    description={day.description}
-                    temperatureMax={day.temperatureMax}
-                    temperatureMin={day.temperatureMin}
-                    weatherCode={day.weatherCode}
-                    outfitSuggestion={outfits.length > 0 ? outfits[index] : undefined}
-                  />
-                ))
-              )}
+              {weather.map((day, index) => (
+                <DayCard
+                  key={index}
+                  date={day.date}
+                  description={day.description}
+                  temperatureMax={day.temperatureMax}
+                  temperatureMin={day.temperatureMin}
+                  weatherCode={day.weatherCode}
+                  outfitSuggestion={outfits[index]}
+                />
+              ))}
             </div>
           </>
         )}

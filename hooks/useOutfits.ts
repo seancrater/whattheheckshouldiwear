@@ -9,7 +9,7 @@ export function useOutfits(weather: WeatherData[] | undefined) {
         throw new Error('Weather data must be an array of 7 days');
       }
       
-  const response = await fetch('/api/outfits', {
+      const response = await fetch('/api/outfits', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ weatherByDay: weather }),
@@ -21,7 +21,7 @@ export function useOutfits(weather: WeatherData[] | undefined) {
   });
 
   return {
-    outfits: query.data?.outfits || [],
+    outfits: query.data?.outfits || undefined,
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.data?.error,

@@ -26,6 +26,8 @@ export async function POST(request: Request) {
       Then, suggest a valid 5 digit US ZIP code for that location.
       Please also provide longitude and latitude coordinates for the center of that ZIP code.
       The location information provided is: ${locationDescription}
+
+      Please ensure the response stricltly adheres to the JSON schema provided.
     `;
     
     const response = await fetch('https://api.openai.com/v1/chat/completions', {

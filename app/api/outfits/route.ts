@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     Given the following array of daily weather data: ${JSON.stringify(weatherByDay)}
     For each day, suggest a sensible outfit based on the weather.
     Do not repeat the date in your response, we already show it in the UI.
+    Please ensure the response stricltly adheres to the JSON schema provided.
   `;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -55,9 +56,10 @@ export async function POST(request: Request) {
     const data = await response.json();
 
     // Try to parse the response content as JSON array of strings
-    const outfits = JSON.parse(data.choices?.[0]?.message?.content ?? '[]');
+    const outfits = JSON.parse(data.choices?.[0]?.message?.content ?? '{ outfits: [] }');
+    const mappedOutfits = outfits?.outfits.map((outfit: { outfit: string }) => outfit.outfit) || [];
 
-    return NextResponse.json(outfits);
+    return NextResponse.json({ outfits: mappedOutfits });
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
